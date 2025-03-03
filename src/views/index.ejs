@@ -91,8 +91,9 @@
     <div class="container">
         <h1>To-Do List</h1>
         <form action="/add" method="POST">
-            <input type="text" name="title" placeholder="Task Title" required>
-            <input type="text" name="description" placeholder="Task Description" required>
+            <input type="text" name="title" placeholder="Task Title" >
+            <input type="text" name="description" placeholder="Task Description" >
+            <div id="err" style="color: red; size: 10px;"></div>
             <button type="submit">Add Task</button>
         </form>
 
@@ -110,4 +111,31 @@
         </ul>
     </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        const titleInput = document.querySelector("input[name='title']");
+        const descriptionInput = document.querySelector("input[name='description']");
+        const errorMsg = document.getElementById('err'); // Error message element
+
+        form.addEventListener("submit", (event) => {
+            const title = titleInput.value.trim();
+            const description = descriptionInput.value.trim();
+
+            if (title === "" || description === "") {
+                errorMsg.innerHTML = `Both Title and Description are required!`;
+                errorMsg.style.color = "red";
+                errorMsg.style.display = "block";
+
+                setTimeout(() => {
+                    errorMsg.style.display = "none"; 
+                }, 2000);
+
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+
 </html>
